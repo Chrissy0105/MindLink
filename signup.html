@@ -138,19 +138,31 @@
       </div>
     </footer>
 
-    <script src="src/main.js"></script>
-    <script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
-    const signupForm = document.querySelector('.box');
-    const submitButton = signupForm.querySelector('.cta');
+    const signupBtn = document.getElementById('signupBtn');
     
-    submitButton.addEventListener('click', async function(e) {
+    signupBtn.addEventListener('click', async function(e) {
         e.preventDefault();
         
-        const telephone = signupForm.querySelector('input[type="text"]').value;
-        const email = signupForm.querySelector('input[type="email"]').value;
-        const password = signupForm.querySelector('input[type="password"]').value;
+        // Get form values
+        const telephone = document.getElementById('telephone').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
         
+        // Validate required fields
+        if (!telephone || !email || !password) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        // Show loading state
+        signupBtn.textContent = 'Signing Up...';
+        signupBtn.disabled = true;
+
         try {
             const result = await AuthAPI.signup({ 
                 telephone, 
@@ -159,14 +171,37 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (result.message === 'User registered successfully') {
-                alert('Registration successful! Please login.');
+                alert('Registration successful! Please login with your credentials.');
                 window.location.href = 'login.html';
             } else {
-                alert(result.Error || 'Registration failed');
+                alert(result.Error || 'Registration failed. Please try again.');
             }
         } catch (error) {
             console.error('Signup error:', error);
-            alert('Registration failed. Please try again.');
+            alert('Registration failed. Please check your connection and try again.');
+        } finally {
+            // Reset button state
+            signupBtn.textContent = 'Sign Up';
+            signupBtn.disabled = false;
+        }
+    });
+
+    // Allow form submission with Enter key
+    document.getElementById('telephone').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            signupBtn.click();
+        }
+    });
+    
+    document.getElementById('email').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            signupBtn.click();
+        }
+    });
+    
+    document.getElementById('password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            signupBtn.click();
         }
     });
 });

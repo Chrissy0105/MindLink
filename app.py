@@ -1,72 +1,45 @@
-from flask import Flask, send_from_directory
+from flask import Flask
 from flask_cors import CORS
 from config import Config
 from extensions import db, bcrypt
-import os
-
-# ------------------- Initialize App and Config -------------------
-app = Flask(__name__, 
-    static_folder='static',
-    static_url_path=''
-)
-app.config.from_object(Config)
-
-# ------------------- Initialize Extensions with app -------------------
-db.init_app(app)
-bcrypt.init_app(app)
-CORS(app, resources={
-    r"/api/*": {
-        "origins": ["http://localhost:5000"],
-        "methods": ["GET", "POST", "PUT", "DELETE"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    }
-})  # Configure CORS for API routes
-
-# Create tables within app context
-with app.app_context():
-    db.create_all()
-
-# ------------------- Register Blueprints -------------------
 from auth_bp import auth_bp
 from chat_bp import chat_bp
 
+app = Flask(__name__)
+app.config.from_object(Config)
+
+# Initialize extensions
+db.init_app(app)
+bcrypt.init_app(app)
+
+# Configure CORS properly
+CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5000", "http://127.0.0.1:5000"])
+
+# Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(chat_bp, url_prefix='/api/chat')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/health', methods=['GET'])
+def health_check():
+    return {'status': 'ok', 'message': 'MindLink API is running'}, 200
 
-# ------------------- Create DB Tables -------------------
+# Serve static files for frontend
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    try:
+        return app.send_static_file('index.html')
+    except:
+        return {'error': 'Frontend not found'}, 404
+
 with app.app_context():
     db.create_all()
 
-# ------------------- Frontend Routes -------------------
-@app.route('/')
-def index():
-    return send_from_directory('static', 'index.html')
-
-@app.route('/login')
-def login():
-    return send_from_directory('static', 'login.html')
-
-@app.route('/signup')
-def signup():
-    return send_from_directory('static', 'signup.html')
-
-@app.route('/dashboard')
-def dashboard():
-    return send_from_directory('static', 'dashboard.html')
-
-# Handle 404 errors by returning to index
-@app.errorhandler(404)
-def not_found(e):
-    return send_from_directory('static', 'index.html')
-
-# ------------------- Health Check -------------------
-@app.route('/api/health', methods=['GET'])
-def health_check():
-    return {'status': 'ok'}, 200
-
-# ------------------- Run the App -------------------
 if __name__ == '__main__':
-    app.run(debug=app.config['DEBUG'], host='0.0.0.0', port=5000)
+    print("🚀 Starting MindLink server on http://localhost:5000")
+    print("📊 API endpoints available at:")
+    print("   - POST http://localhost:5000/api/auth/signup")
+    print("   - POST http://localhost:5000/api/auth/login")
+    print("   - POST http://localhost:5000/api/chat/message")
+    print("   - GET  http://localhost:5000/api/chat/history")
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -133,30 +133,65 @@
       </div>
     </footer>
 
-    <script src="src/main.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    
     <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.querySelector('.box');
-    const submitButton = loginForm.querySelector('.cta');
+    const loginBtn = document.getElementById('loginBtn');
     
-    submitButton.addEventListener('click', async function(e) {
+    loginBtn.addEventListener('click', async function(e) {
         e.preventDefault();
         
-        const email = loginForm.querySelector('input[type="text"]').value;
-        const password = loginForm.querySelector('input[type="password"]').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
         
+        if (!email || !password) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        // Show loading state
+        loginBtn.textContent = 'Logging In...';
+        loginBtn.disabled = true;
+
         try {
             const result = await AuthAPI.login({ email, password });
             
-            if (result.token) {
+            if (result.message === 'Login successful') {
+                // Store the token and user info
                 TokenManager.setToken(result.token);
+                TokenManager.setUserData({
+                    username: result.username,
+                    id: result.id
+                });
+                
+                alert('Login successful!');
                 window.location.href = 'dashboard.html';
             } else {
-                alert(result.Error || 'Login failed');
+                alert(result.Error || 'Login failed. Please check your credentials.');
             }
         } catch (error) {
             console.error('Login error:', error);
-            alert('Login failed. Please try again.');
+            alert('Login failed. Please check your connection and try again.');
+        } finally {
+            // Reset button state
+            loginBtn.textContent = 'Log In';
+            loginBtn.disabled = false;
+        }
+    });
+
+    // Allow form submission with Enter key
+    document.getElementById('email').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            loginBtn.click();
+        }
+    });
+    
+    document.getElementById('password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            loginBtn.click();
         }
     });
 });
