@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind Link JA</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/nav&footer.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <div><i class="fa-solid fa-thought-bubble"></i></div>
+
+    <header class="main-header" id="nav-bar">
+      <div class="wrapper" data-width="wide">
+        <a href="index.html" class="logo" id="logo-box">
+          <img src="assets/icons/ml_logo(color).svg" />
+        </a>
+        <nav class="main-navigation" id="nav-container">
+          <ul class="nav-list left">
+            <li><a href="about.html" class="nav-link">About Us</a></li>
+          </ul>
+          <ul class="nav-list right">
+            <li>
+              <a href="login.html" class="nav-link log" data-cta-style="line"
+                >Log In</a
+              >
+            </li>
+            <li><a href="signup.html" class="nav-link sign">Sign Up</a></li>
+          </ul>
+        </nav>
+        <button
+          onclick=" showMenu()"
+          class="mobile-navigation"
+          id="menu-container"
+        >
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </button>
+        <div onclick="showMenu()" class="black" id="black-box"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section-hero">
+        <div class="wrapper">
+          <div class="hero">
+            <div class="lockup">
+              <h1>
+                <span class="txt-s-clr"
+                  ><img class="lb1" src="assets/pics/light_blue.png" /> Small
+                  chats,</span
+                >
+                <span class="txt-p-clr"
+                  ><img class="lb2" src="assets/pics/light_blue.png" />Big
+                  changes</span
+                >
+              </h1>
+              <p>
+                To bridge the gap between technology and mental wellness by
+                offering an intelligent and empathetic chat bot.
+              </p>
+              <div class="buttons">
+                <a href="login.html" class="cta">Get Started <span>- It's free</span> </a>
+              </div>
+            </div>
+            <div class="img-box">
+              <img class="brain" src="assets/pics/brain.png" />
+              <img class="db1" src="assets/pics/dark_blue.png" />
+              <img class="db2" src="assets/pics/dark_blue.png" />
+              <img class="db3" src="assets/pics/dark_blue.png" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-mood">
+        <div class="wrapper">
+          <div class="mood">
+            <div class="lockup">
+              <h2>Pop In, Check In, Feel Better</h2>
+              <p>The first step to change is understanding yourself.</p>
+              <div class="buttons">
+                <a href="login.html" class="cta" data-cta-style="black">Pop in today!</a>
+              </div>
+            </div>
+
+            <div class="img-box">
+              <img class="phone" src="assets/pics/phone.png" />
+              <img class="em1" src="assets/pics/em1.png" />
+              <img class="em2" src="assets/pics/em2.png" />
+              <img class="em3" src="assets/pics/em3.png" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-quest">
+        <div class="wrapper">
+          <div class="quest">
+            <div class="lockup">
+              <h2>Who Are We?</h2>
+              <p>The creators of Mind Link.</p>
+              <div class="buttons">
+                <a href="about.html" class="cta">Learn More</a>
+              </div>
+            </div>
+
+            <div class="img-box">
+              <img class="q_mark" src="assets/pics/question mark.png" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-cnt">
+        <div class="top">
+          <div class="wrapper top-cnt">
+            <div class="company-info">
+              <a href="index.html"
+                ><img src="assets/icons/ml_logo(white).svg"
+              /></a>
+              <p>
+                To bridge the gap between technology and mental wellness by
+                offering an intelligent and empathetic chat bot.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="btm">
+          <p>&copy;2025 Mind Link JA all rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="src/main.js"></script>
+  </body>
+</html>

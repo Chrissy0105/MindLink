@@ -1,0 +1,213 @@
+.section-authentication {
+}
+
+.authentication {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.company .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  color: white;
+  padding-block: 2.4rem;
+  max-width: 800px;
+}
+
+.company .wrapper img {
+  display: none;
+  padding-bottom: 1.6rem;
+}
+
+.company .wrapper .lockup h1 {
+  color: var(--primary-color);
+}
+
+.company .wrapper .lockup p {
+  font-size: clamp(var(--fs-0), 3vw, var(--fs-1));
+}
+
+.form {
+  background-color: white;
+  background-image: url("../assets/bg/bg.jpg");
+}
+
+.form .wrapper {
+  max-width: 500px;
+}
+
+.form .box {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  background: rgba(129, 127, 127, 0.2);
+  border-radius: 1.4rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form .box h2 {
+  display: flex;
+  color: white;
+  font-size: clamp(var(--fs-2), 10vw, var(--fs-5));
+}
+
+.form .box .group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+  gap: 2.4rem;
+}
+
+.form .box .group li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 100px;
+  position: relative;
+  color: white;
+  cursor: pointer;
+  transition: transform var(--bg-transition);
+}
+
+.form .box .group li a::before {
+  content: "";
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  position: absolute;
+  z-index: -1;
+}
+
+.form .box .group li a img {
+  width: 90%;
+}
+
+.form .box .inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form .box .inputs p {
+  width: max-content;
+  color: white;
+  opacity: 0.85;
+  font-size: clamp(var(--fs-0), 3vw, var(--fs-1));
+}
+
+.form .box .name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: white;
+  opacity: 0.85;
+}
+
+.form .box .password {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: white;
+  opacity: 1;
+}
+
+.form .box .password a {
+  width: max-content;
+  text-decoration: underline;
+  font-size: clamp(var(--fs-0), 3vw, var(--fs-1));
+  font-weight: 600;
+  color: white;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: filter var(--bg-transition);
+}
+
+.form .box .password label,
+.form .box .name label {
+  width: max-content;
+  font-size: clamp(var(--fs-0), 3vw, var(--fs-1));
+}
+
+.form .box .password input,
+.form .box .name input {
+  border-radius: 5px;
+  padding: 0.2rem 0.8rem;
+}
+
+.form .box.buttons {
+  justify-content: center;
+}
+
+.form .box .cta {
+  width: 96%;
+}
+
+.sub-text {
+  color: white;
+  font-size: clamp(var(--fs-0), 3vw, var(--fs-1));
+}
+
+.account {
+  color: white;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: filter var(--bg-transition);
+}
+
+/*desktop*/
+@media (width > 1024px) {
+  .authentication {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .company .wrapper {
+    padding-block: 4.8rem;
+  }
+
+  .company .wrapper img {
+    display: flex;
+    height: 12rem;
+  }
+}
+
+@media (width > 1028px) {
+  .form .box .group li a:hover {
+    transform: translateY(-5px);
+  }
+
+  .account:hover {
+    filter: brightness(0);
+  }
+
+  .form .box .password a:hover {
+    filter: brightness(0);
+  }
+}
+
+.form .box .group li a:active {
+  transform: translateY(5px);
+}
+
+.form .box .password a:active {
+  filter: brightness(0);
+}
+
+.account:active {
+  filter: brightness(0);
+}

@@ -1,0 +1,140 @@
+@layer default {
+  .section-hero {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 70%,
+      rgba(0, 58, 219, 0.2) 80%,
+      rgba(0, 58, 219, 1) 100%
+    );
+  }
+
+  .hero,
+  .mood,
+  .quest {
+    display: grid;
+    gap: 3.2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .hero .lockup {
+    position: relative;
+  }
+
+  .hero .lockup h1 span {
+    position: relative;
+  }
+
+  .hero .lockup h1 span .lb1 {
+    position: absolute;
+    width: 4%;
+    top: 12%;
+    left: 0%;
+  }
+
+  .hero .lockup h1 span .lb2 {
+    position: absolute;
+    top: 70%;
+    width: 6%;
+    right: 0%;
+    transform: rotate(30deg);
+  }
+
+  .hero .img-box {
+    position: relative;
+  }
+
+  .hero .img-box .brain {
+    width: 80%;
+  }
+
+  .hero .img-box .db1 {
+    position: absolute;
+    width: 12%;
+    right: 12%;
+    top: 5%;
+    transform: rotate(30deg);
+  }
+
+  .hero .img-box .db2 {
+    position: absolute;
+    width: 10%;
+    left: 5%;
+    top: 54%;
+    transform: rotate(-30deg);
+  }
+
+  .hero .img-box .db3 {
+    position: absolute;
+    width: 6%;
+    right: 18%;
+    top: 80%;
+    transform: rotate(70deg);
+  }
+
+  .section-mood {
+    background-color: var(--primary-color);
+  }
+
+  .mood .lockup h2 {
+    color: white;
+  }
+
+  .mood .lockup p {
+    color: white;
+  }
+
+  .mood .img-box {
+    position: relative;
+  }
+
+  .mood .img-box .phone {
+    width: 60%;
+    filter: drop-shadow(-10px -9px 0px rgba(255, 255, 255, 0.5));
+  }
+
+  .mood .img-box .em1 {
+    position: absolute;
+    width: 25%;
+    top: 0%;
+    left: 25%;
+  }
+
+  .mood .img-box .em2 {
+    position: absolute;
+    width: 20%;
+    top: 48%;
+    right: 14%;
+  }
+
+  .mood .img-box .em3 {
+    position: absolute;
+    width: 15%;
+    top: 80%;
+    left: 10%;
+  }
+
+  .quest .img-box .q_mark{
+    width: 60%;
+  }
+}
+
+@media (width > 1024px) {
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  section {
+    text-align: left;
+  }
+
+  .hero, .mood, .quest {
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mood .lockup{
+    order: 1;
+  }
+}

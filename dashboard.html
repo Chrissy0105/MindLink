@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind Link JA</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/nav&footer.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <div class="chat"></div>
+
+    <header class="main-header" id="nav-bar">
+      <div class="wrapper" data-width="wide">
+        <a href="index.html" class="logo" id="logo-box">
+          <img src="./assets/icons/ml_logo(color).svg" />
+        </a>
+        <nav class="main-navigation" id="nav-container">
+          <ul class="nav-list left">
+            <li><a class="nav-link">About Us</a></li>
+          </ul>
+
+          <ul class="nav-list right">
+            <li>
+              <button class="account-dropdown" onclick="showProg(this)">
+                <p>Name</p>
+                <i id="arr" class="fas fa-chevron-down"></i>
+              </button>
+              <ul class="account-info container">
+                <li><a class="set">Settings</a></li>
+                <li><a class="log-out">Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <hr />
+        </nav>
+        <button
+          onclick=" showMenu()"
+          class="mobile-navigation"
+          id="menu-container"
+        >
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </button>
+        <div onclick="showMenu()" class="black" id="black-box"></div>
+      </div>
+    </header>
+
+
+
+    <main>
+      <section class="section-affirm">
+        <div class="wrapper">
+          <div class="affirm">
+            <div class="info">
+              <p>
+                Day 1: I am worthy of love, care, and understanding — especially
+                from myself.
+              </p>
+              <img class="em_4" src="assets/pics/em4.png" />
+            </div>
+
+            <div class="chat">
+              <div class="s-box" id="chatMessages">
+                
+              </div>
+              <div class="chat-input">
+                <textarea
+                  id="messageBox"
+                  placeholder="Type a message..."
+                ></textarea>
+                <button id="sendBtn">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-cnt">
+        <div class="top">
+          <div class="wrapper top-cnt">
+            <div class="company-info">
+              <a href="index.html"
+                ><img src="/assets/icons/ml_logo(white).svg"
+              /></a>
+              <p>
+                To bridge the gap between technology and mental wellness by
+                offering an intelligent and empathetic chat bot.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="btm">
+          <p>&copy;2025 Mind Link JA all rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="src/main.js" defer></script>
+    <script>
+document.addEventListener('DOMContentLoaded', async function() {
+    const messageBox = document.getElementById('messageBox');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const token = TokenManager.getToken();
+
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Load chat history
+    async function loadChatHistory() {
+        try {
+            const result = await ChatAPI.getHistory(token);
+            if (result.chats) {
+                chatMessages.innerHTML = result.chats.map(chat => `
+                    <div class="message ${chat.risk_level}">
+                        <p><strong>You:</strong> ${chat.message}</p>
+                        <small>Risk: ${chat.risk_level}</small>
+                    </div>
+                `).join('');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        } catch (error) {
+            console.error('Failed to load chat history:', error);
+        }
+    }
+
+    // Send message
+    async function sendMessage() {
+        const message = messageBox.value.trim();
+        if (!message) return;
+
+        try {
+            const result = await ChatAPI.sendMessage(message, token);
+            
+            if (result.message === 'Message saved') {
+                // Add message to chat
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${result.risk_level}`;
+                messageDiv.innerHTML = `
+                    <p><strong>You:</strong> ${message}</p>
+                    <small>Risk: ${result.risk_level}</small>
+                `;
+                chatMessages.appendChild(messageDiv);
+                
+                // Clear input
+                messageBox.value = '';
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Show alert for high risk
+                if (result.risk_level === 'high' && result.alert) {
+                    alert(`🚨 HIGH RISK DETECTED 🚨\n\n${result.alert}\n\nHelplines:\n${result.helplines}`);
+                }
+            } else {
+                alert('Failed to send message: ' + (result.error || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Send message error:', error);
+            alert('Failed to send message. Please try again.');
+        }
+    }
+
+    // Event listeners
+    sendBtn.addEventListener('click', sendMessage);
+    messageBox.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    // Load initial chat history
+    await loadChatHistory();
+});
+</script> <!--
+  Come back to this later just in case..
+-->
+  </body>
+</html>

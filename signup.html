@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind Link JA</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/nav&footer.css" />
+    <link rel="stylesheet" href="css/user.css" />
+  </head>
+  <body>
+    <header class="main-header" id="nav-bar">
+      <div class="wrapper" data-width="wide">
+        <a href="index.html" class="logo" id="logo-box">
+          <img src="assets/icons/ml_logo(color).svg" />
+        </a>
+        <nav class="main-navigation" id="nav-container">
+          <ul class="nav-list left">
+            <li><a class="nav-link">About Us</a></li>
+          </ul>
+          <ul class="nav-list right">
+            <li><a href="login.html" class="nav-link log">Log In</a></li>
+            <li><a href="signup.html" class="nav-link sign">Sign Up</a></li>
+          </ul>
+        </nav>
+        <button
+          onclick=" showMenu()"
+          class="mobile-navigation"
+          id="menu-container"
+        >
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </button>
+        <div onclick="showMenu()" class="black" id="black-box"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section-authentication">
+        <div class="authentication">
+          <div class="company">
+            <div class="wrapper">
+              <div class="lockup">
+                <h1>Join Mind Link and be the change you want today.</h1>
+                <p>
+                  By logging in to Mind Link, you agree to our Terms of use and
+                  Privacy Policy.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="form">
+            <div class="wrapper">
+              <div class="box">
+                <h2>Sign Up</h2>
+
+                <div class="inputs">
+                  <p>
+                    <span style="color: red">*</span>Indicates a required field.
+                  </p>
+                  <div class="name">
+                    <label
+                      >Phone Number
+                      <span style="color: red">*</span></label
+                    >
+                    <input type="text" />
+                  </div>
+                  <div class="password">
+                    <label>Email <span style="color: red">*</span></label>
+                    <input type="email" />
+    
+                  </div>
+
+                  <div class="password">
+                    <label>Password <span style="color: red">*</span></label>
+                    <input type="password" />
+                    
+                  </div>
+                </div>
+                <div class="buttons">
+                  <a href="dashboard.html" class="cta">Sign Up</a>
+                </div>
+
+                <p class="sub-text">
+                  <a href="login.html" class="account">Already have an account?</a>
+                </p>
+
+                <p class="hd-clr">OR</p>
+
+                <ul class="group">
+                  <li>
+                    <a><img src="assets/icons/google.svg" /></a>
+                  </li>
+                  <li>
+                    <a><img src="assets/icons/fb.svg" /></a>
+                  </li>
+                  <li>
+                    <a><img src="assets/icons/twit.svg" /></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+     <footer id="footer">
+      <div class="footer-cnt">
+        <div class="top">
+          <div class="wrapper top-cnt">
+            <div class="company-info">
+              <a href="index.html"
+                ><img src="assets/icons/ml_logo(white).svg"
+              /></a>
+              <p>
+                To bridge the gap between technology and mental wellness by
+                offering an intelligent and empathetic chat bot.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="btm">
+          <p>&copy;2025 Mind Link JA all rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="src/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const signupForm = document.querySelector('.box');
+    const submitButton = signupForm.querySelector('.cta');
+    
+    submitButton.addEventListener('click', async function(e) {
+        e.preventDefault();
+        
+        const telephone = signupForm.querySelector('input[type="text"]').value;
+        const email = signupForm.querySelector('input[type="email"]').value;
+        const password = signupForm.querySelector('input[type="password"]').value;
+        
+        try {
+            const result = await AuthAPI.signup({ 
+                telephone, 
+                email, 
+                password 
+            });
+            
+            if (result.message === 'User registered successfully') {
+                alert('Registration successful! Please login.');
+                window.location.href = 'login.html';
+            } else {
+                alert(result.Error || 'Registration failed');
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+            alert('Registration failed. Please try again.');
+        }
+    });
+});
+</script>
+  </body>
+</html>
